@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Renderizar Texto de Arquivo com JS</title>
+</head>
+<body>
+    <h1>Carregar e Renderizar Arquivo de Texto</h1>
+
+    <input type="file" id="fileInput" accept=".txt, text/plain">
+    <button onclick="carregarArquivo()">Carregar Texto</button>
+    
+    <h2>Conteúdo do Arquivo:</h2>
+    <pre id="fileContent" style="border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9;"></pre>
+
+    <script>
+        function carregarArquivo() {
+            const input = document.getElementById('fileInput');
+            const file = input.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                // Define o que fazer quando o arquivo for lido com sucesso
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    document.getElementById('fileContent').textContent = content;
+                };
+
+                // Define o que fazer em caso de erro na leitura
+                reader.onerror = function(e) {
+                    console.error("Erro ao ler o arquivo:", e.target.error);
+                    document.getElementById('fileContent').textContent = "Erro ao carregar o arquivo.";
+                };
+
+                // Lê o arquivo como texto
+                reader.readAsText(file);
+            } else {
+                document.getElementById('fileContent').textContent = "Por favor, selecione um arquivo de texto.";
+            }
+        }
+    </script>
+</body>
+</html>
